@@ -11,6 +11,7 @@
 - Hive
 - Redis
 - Mysql
+- Vue
 ## 开发语言
 - Java
 - Python
