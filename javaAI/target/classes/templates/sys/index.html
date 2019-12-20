@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>测试websocket</title>
+    <base href="<%=basePath%>">
+    <link rel="stylesheet" type="text/css" media="screen" th:href="@{/static/css/peopleInfos.css}"/>
+    <!-- <style>
+      .infos table{border:2px solid #3f65b7}
+    </style> -->
+  </head>
+  <body>
+  <h2>Bazinga</h2>
+  <div class="infos">
+    <table class="loginInfos">
+      <tr>
+        <td>姓名</td>
+        <td>密码</td>
+      </tr>
+      <tr>
+        <td th:text="${loginInfos.username}"></td>
+        <td th:text="${loginInfos.password}"></td>
+      </tr>
+      
+    </table>
+  </div>
+  <div class="peopleInfos">
+    <table border="4" align="center">
+      <tr>
+        <td>姓名</td>
+        <td>地址</td>
+      </tr>
+      <tr th:each="i:${peopleInfos}">
+        <td th:text="${i.name}"></td>
+        <td th:text="${i.address}"></td>
+      </tr>
+    </table>
+  </div> 
+  </body>
+</html>

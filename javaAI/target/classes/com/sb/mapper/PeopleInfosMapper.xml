@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sb.mapper.PeopleInfosMapper">
+<!-- <mapper namespace="com.sb.dao.PeopleInfosDao"> -->
+    <select id="selectAllPeopleInfos" resultType="PeopleInfos">
+        select * from peopleinfostable
+    </select>
+    <insert id="addPeopleInfos" parameterType="com.sb.po.PeopleInfos">
+        insert into 
+        peopleinfostable
+        (name, address)
+        values
+        (#{name}, #{address})
+    </insert>
+    <delete id="deletePeopleInfosByName" parameterType="string">
+        delete from peopleinfostable where name=#{name}
+    </delete>
+    <select id="selectPeopleInfosByName" parameterType="string" resultType="map">
+        select * from peopleinfostable where name=#{name}
+    </select>
+</mapper>

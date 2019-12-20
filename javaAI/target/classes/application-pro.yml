@@ -1,0 +1,54 @@
+spring:
+  profiles: pro
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/peopleinfosforsb?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+  quartz:
+    properties:
+      scheduler: 
+        instanceName: clusteredScheduler
+        instanceId: AUTO
+      jobStore:
+        class: org.quartz.impl.jdbcjobstore.JobStoreTX
+        driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+        tablePrefix: QRTZ_
+        isClustered: true
+        clusterCheckinInterval: 10000
+        useProperties: false
+      threadPool:
+        class: org.quartz.simpl.SimpleThreadPool
+        threadCount: 10
+        threadPriority: 5
+        threadInheritContextClassLoaderOfInitializingThread: true 
+      job-store-type: jdbc
+  application: 
+    name: quartz-cluster-node-second
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password: china@asia 
+    jedis: 
+      pool: 
+        max-active: 8 
+        max-idle: 8
+        max-wait: -1ms 
+        min-idle: 0
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+server:
+  port: 8090
+logging: 
+  level: 
+    root: INFO
+// security: 
+//   user: 
+//     name: admin 
+//     password: 123456
+pagehelper: 
+  helper-dialect: mysql 
+  reasonable: true 
+  support-methods-arguments: true

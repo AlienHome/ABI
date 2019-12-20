@@ -1,0 +1,16 @@
+spring:
+  profiles: 
+    active: dev
+mybatis:
+  config-location: classpath:/mybatis-config.xml
+logging: 
+  level: 
+    root: INFO
+// security: 
+//   user: 
+//     name: admin 
+//     password: 123456
+pagehelper: 
+  helper-dialect: mysql 
+  reasonable: true 
+  support-methods-arguments: true

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>测试requestbody</title>
+    <!-- <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+    <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script> -->
+    <!-- <script th:src="@{/js/jquery-3.2.1.min.js}"></script> -->
+    <!-- <script th:src="@{/js/sockjs.min.js}"></script> -->
+    <script src="/app.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/js/sockjs.min.js"></script>
+</head>
+<body>
+<input type="text" id="text">
+<button id="btn1" value="发送给所有人">发送给所有人</button>
+<button id="btn2" value="发送给特定用户">发送给特定用户</button>
+<div id="msg"></div>
+
+</body>
+</html>
+<script>
+    // console.log("path:"+"<%=path%>");
+    $(function() {
+        var websocket;
+        // 首先判断是否 支持 WebSocket
+        if('WebSocket' in window) {
+            websocket = new WebSocket("ws://192.168.0.168:8090/websocket");
+        } else if('MozWebSocket' in window) {
+            websocket = new MozWebSocket("ws://192.168.0.168:8090/websocket");
+        } else {
+            websocket = new SockJS("http://192.168.0.168:8090/sockjs/websocket");
+        }
+        // 打开时
+        websocket.onopen = function(evnt) {
+            console.log("  websocket.onopen  ");
+        };
+        // 处理消息时
+        websocket.onmessage = function(evnt) {
+            alert("你有一条新消息");
+            $("#msg").html(evnt.data);
+        };
+        websocket.onerror = function(evnt) {
+            console.log("  websocket.onerror  ");
+        };
+        websocket.onclose = function(evnt) {
+            console.log("  websocket.onclose  ");
+        };
+        // 点击了发送消息按钮的响应事件
+        $("#btn2").bind("click",function () {
+            var url = "http://192.168.0.168:8090/websocket/sendMsg";
+            var content =  $("#text").val();
+            var toUserName = "admin"
+            $.ajax({
+                data: "content=" + content + "&toUserName=" + toUserName,
+                type: "get",
+                dataType: 'text',
+                async: false,
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                encoding: "UTF-8",
+                url: url,
+                success: function (data) {
+                    alert(data.toString());
+                },
+                error: function (msg) {
+                    alert(msg);
+                },
+            });
+        })
+        $("#btn1").bind("click",function () {
+            var url = "http://192.168.0.168:8090/websocket/sendMsg2";
+            var content =  $("#text").val();
+            $.ajax({
+                data: "content=" + content ,
+                type: "get",
+                dataType: 'text',
+                async: false,
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+                encoding: "UTF-8",
+                url: url,
+                success: function (data) {
+                    alert(data.toString());
+                },
+                error: function (msg) {
+                    alert(msg);
+                },
+            });
+        })
+    });
+</script>
